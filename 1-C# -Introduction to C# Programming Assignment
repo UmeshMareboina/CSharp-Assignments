@@ -1,0 +1,217 @@
+*/ 1.Write a Simple console Application Calculator with the help of Visual Studio .NET IDE which will perform following operations on two numbers:
+Addition.
+Subtraction.
+Multiplication.
+Division
+Accept input from user and display results on console. Make use of loops, switch case wherever required.  */
+
+
+using System;
+
+namespace CSharp_inputfromuser_assignment
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.Write("Enter an operator (+,-,*,/): ");
+            char op = Console.ReadKey().KeyChar ;
+            Console.WriteLine();
+            int num1, num2, result = 0;
+                Console.WriteLine("Enter the first number:");
+              num1 = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Enter the second number:");
+                num2 = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine();
+                switch (op)
+                {
+                    case '+':
+                        result = num1 + num2;
+                        break;
+                    case '-':
+                        result = num1 - num2;
+                        break;
+                    case '*':
+                        result = num1 * num2;
+                        break;
+                    case '/':
+                        result = num1 / num2;
+                        break;
+                    default:
+                        Console.WriteLine("You Have Entered the wrong operator");
+                        break;
+                }
+            Console.WriteLine("Result");
+                Console.WriteLine(num1 + " " + op + " " + num2+ " " + "="+" " + result);
+                Console.WriteLine();
+                Console.ReadKey();
+            }
+    }
+} 
+        
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+/* 2.Accept average marks of five students. Display the highest marks obtained. */
+
+using System;
+using System.Linq;
+
+namespace CSharp_averagemarks
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            float[] avg = new float[5];
+            int[] Student1 = { 40, 57, 24, 55, 38 };
+            int[] Student2 = { 49, 34, 34, 20, 47 };
+            int[] Student3 = { 70, 40, 43, 62, 56 };
+            int[] Student4 = { 30, 45, 71, 32, 44 };
+            int[] Student5 = { 58, 70, 31, 32, 89 };
+
+            avg[0] = Student1.Sum() / Student1.Length;
+            avg[1] = Student2.Sum() / Student2.Length;
+            avg[2] = Student3.Sum() / Student3.Length;
+            avg[3] = Student4.Sum() / Student4.Length;
+            avg[4] = Student5.Sum() / Student5.Length;
+
+            Console.WriteLine(avg.Max());//To find highest marks
+            Console.ReadLine();
+
+        }
+    }
+}
+--------------------------------------------------------------------------------------------
+/* 3.Write a static method to accept param array of integers. The method should find the sum of all the integers passed and display the result. Write a client program to call the method.*/
+
+using System;
+using System.Linq;
+
+namespace Csharp_paramarray
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            {
+                SumOfIntegers();
+            }
+            static void SumOfIntegers()
+            {
+                int[] numbers = { 12,9,11,3,20 };
+
+                Console.WriteLine(numbers.Sum());
+                Console.ReadKey();
+
+            }
+        }
+    }
+}
+------------------------------------------------------------------------------
+/* 4.Write a method to swap two integers. The client code should call the method and print the swapped value.*/
+using System;
+
+namespace CSharp_swaptwointegers
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+           
+                Console.WriteLine("Enter First Number");
+                int num1 = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Enter Second Number");
+                int num2 = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("before swap :" +num1 +' '+num2);
+                num1 = num1 + num2;       
+                num2 = num1 - num2;      
+                num1 = num1 - num2; 
+                Console.WriteLine("after swap {0} {1} " ,num1,num2);
+                Console.ReadKey();
+            }
+        }
+    }
+----------------------------------------------------------------------------
+/* 5.Write a single method that calculates the area and circumference of the circle. The area and circumference should be displayed through the client code*/
+
+using System;
+
+namespace CSharp_circumference_circle
+{
+    class Program
+    {
+    static void Circle()
+            {
+                Console.WriteLine("Enter Radius of Circle");
+                float a = Convert.ToInt32(Console.ReadLine());
+                double d = 2 * 2.13 * a;
+                double Area = 2.13 * a * a;
+                Console.WriteLine("circumfernce of the circle {0}", d);
+                Console.WriteLine("Area of the circle {0}", Area);
+                Console.ReadKey();
+            }
+        static void Main(string[] args)
+        {
+            {
+                Circle();
+            }
+        }
+    }
+}
+----------------------------------------------------------------------------------------
+/* Create a structure Book which contains the following members:
+bookId, title, price, bookType
+Type of the book should an enumerated data type with values as Magazine, Novel, ReferenceBook, Miscellaneous. Write a console based application to do the following tasks.
+Accept the details of the book
+Display the details of the book. The type of book should be displayed as a string e.g.:
+Magazine*/using System;
+
+namespace BookStructure
+{
+    class Program
+    {
+            struct Books
+            {
+                public enum bookType
+                {
+                    Magazine,
+                    Novel,
+                    ReferenceBook,
+                    Miscellaneous
+                }
+
+                public string Title { get; set; }
+                public int Price { get; set; }
+                public int BookId { get; set; }
+                public string BookType { get; set; }
+
+            }
+            class BookStructure
+            {
+                public static void Main()
+                {
+                    Books bo = new Books();
+
+                    Console.Write("Enter Book Id :");
+                    bo.BookId = Convert.ToInt32(Console.ReadLine());
+
+                    Console.Write("Enter Book Title:");
+                    bo.Title = (Console.ReadLine());
+
+                    Console.Write("Enter Book Price:");
+                    bo.Price = Convert.ToInt32(Console.ReadLine());
+
+                    Console.Write("Enter Book Type:");
+                    bo.BookType = Console.ReadLine();
+
+                
+                    Console.WriteLine("------------");
+                    Console.WriteLine("------------");
+                    Console.WriteLine(" Book ID :" + bo.BookId);
+                    Console.WriteLine(" Book Title:" + bo.Title);
+                    Console.WriteLine(" Book Price:" + bo.Price);
+                    Console.WriteLine(" Book BookType:" + bo.BookType);
+                }
+            }
+        }
+    }
