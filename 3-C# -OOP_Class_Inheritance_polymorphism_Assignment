@@ -1,0 +1,171 @@
+/*Create a hierarchy of Employee, Manager, MarketingExecutive in Employee Management System. They should have the following functionality.
+Manager with following private members.
+Petrol Allowance: 8 % of Salary.
+Food Allowance : 13 % of Salary.
+Other Allowances : 3% of Salary.
+Calculate GrossSalary by adding above allowances. Override CalculateSalary() method to calculate Net Salary. NetSalary. PF calculation should not consider above allowances.
+MarketingExecutive with following private members.
+Kilometer travel
+Tour Allowances : Rs 5/- per Kilometer (Automatically generated).
+Telephone Allowances : Rs.1000/-
+Calculate GrossSalary by adding above allowances. Override CalculateSalary(). NetSalary,PF calculation should not consider above allowances.*/
+
+
+using System;
+
+namespace InheritancePolymorphismOops
+{ 
+        class Employee
+        {
+            protected int EmpNo;
+            protected string EmpName;
+            protected double Salary, HRA, TA, DA, PF, TDS, NetSalary, GrossSalary;
+
+            public void MyClass(int eNo, string eName, double sal)
+            {
+                EmpNo = eNo;
+                EmpName = eName;
+                Salary = sal;
+            }
+            public int eNo
+            {
+                get { return EmpNo; }
+                set { EmpNo = value; }
+            }
+            public string eName
+            {
+                get { return EmpName; }
+                set { EmpName = value; }
+            }
+            public double sal
+            {
+                get { return Salary; }
+                set { Salary = value; }
+            }
+
+            public virtual double Gross()
+            {
+                if (Salary < 5000)
+                {
+                    HRA = ((sal / 100) * 10);
+                    TA = ((sal / 100) * 5);
+                    DA = ((sal / 100) * 15);
+                    GrossSalary = ((sal) + (HRA + TA + DA));
+                }
+                else if (Salary < 10000)
+                {
+                    HRA = ((sal / 100) * 15);
+                    TA = ((sal / 100) * 10);
+                    DA = ((sal / 100) * 20);
+                    GrossSalary = ((sal) + (HRA + TA + DA));
+                }
+                else if (Salary < 15000)
+                {
+                    HRA = ((sal / 100) * 20);
+                    TA = ((sal / 100) * 15);
+                    DA = ((sal / 100) * 25);
+                    GrossSalary = ((sal) + (HRA + TA + DA));
+                }
+                else if (Salary < 20000)
+                {
+                    HRA = ((sal / 100) * 25);
+                    TA = ((sal / 100) * 20);
+                    DA = ((sal / 100) * 30);
+                    GrossSalary = ((sal) + (HRA + TA + DA));
+                }
+                else if (Salary >= 20000)
+                {
+                    HRA = ((sal / 100) * 25);
+                    TA = ((sal / 100) * 20);
+                    DA = ((sal / 100) * 35);
+                    GrossSalary = ((sal) + (HRA + TA + DA));
+                }
+                return GrossSalary;
+            }
+            public virtual void CalculateSalary()
+            {
+                PF = (GrossSalary / 100) * 10;
+                TDS = (GrossSalary / 100) * 18;
+                NetSalary = (GrossSalary - (PF + TDS));
+            }
+
+        class Manager : Employee
+            {
+
+                private double Petrol_Allowance;
+                private double Food_Allowance;
+                private double Other_Allowance;
+
+                public override double Gross()
+                {
+                    base.Gross();
+                    Petrol_Allowance = ((sal / 100) * 8);
+                    Food_Allowance = ((sal / 100) * 13);
+                    Other_Allowance = ((sal / 100) * 3);
+
+                    return GrossSalary;
+                }
+
+                public override void CalculateSalary()
+                {
+                    base.CalculateSalary();
+                    NetSalary = (GrossSalary - (TDS + PF));
+                }
+                public void ManagerDetails()
+                {
+                    Console.WriteLine("Enter Manager id:");
+                    EmpNo = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("Enter Manager Name:");
+                    EmpName = Console.ReadLine();
+                    Console.WriteLine("Enter Manager base salary:");
+                    Salary = Convert.ToInt32(Console.ReadLine());
+                    Gross();
+                    CalculateSalary();
+                    Console.WriteLine("Manager GrossSalary {0}", GrossSalary);
+                    Console.WriteLine("Manager NetSalary {0}", NetSalary);
+                }
+            }
+            class MarketingExecutive : Employee
+            {
+                private int kilometer;
+                private int Travel_Allowance;
+                private int Telephone_Allowance;
+
+                public override double Gross()
+                {
+                    base.Gross();
+                    Travel_Allowance = kilometer * 5;
+                    Telephone_Allowance = 1000;
+                    GrossSalary += Travel_Allowance + Telephone_Allowance;
+                    return GrossSalary;
+                }
+            public override void CalculateSalary()
+            {
+                base.CalculateSalary();
+                NetSalary = (GrossSalary - (TDS + PF));
+            }
+            public void MarketingExecutiveDetails()
+            {
+                Console.WriteLine("Enter kilometers:");
+                kilometer = Convert.ToInt32(Console.ReadLine());
+                Gross();
+                CalculateSalary();
+                Console.WriteLine("MarketingExecutive GrossSalary {0}", GrossSalary);
+                Console.WriteLine("MarketingExecutive NetSalary {0}", NetSalary);
+            }
+
+        }
+            class Hello
+            {
+
+                static void Main()
+                {
+                    Manager Obj1 = new Manager();
+                    Obj1.ManagerDetails();
+                    MarketingExecutive obj2 = new MarketingExecutive();
+                    obj2.MarketingExecutiveDetails();
+                Console.ReadKey();
+                }
+            }
+        }
+    }
