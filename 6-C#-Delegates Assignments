@@ -1,0 +1,293 @@
+/* Write a console Application for banking domain, having Account class with data members as account number, customer name, balance . It should have Withdraw and Deposit methods for performing banking transaction. It should also define UnderBalance, BalanceZero events. These events would be raised when balance of account is less than certain amount and equal to zero respectively. */
+
+using System;
+
+namespace BankingDomain
+{
+    class Program
+    {
+        public static int Atm_Pin { get; private set; }
+
+        public delegate void Bank(int x);
+
+        public class Account
+        {
+            public int AccountNumber { get; set; }
+            public string CustomerName { get; set; }
+            public decimal bank_balance = 13000;
+            
+
+            public event Bank UnderBalance;
+            public event Bank ZeroBalance;
+
+            public void Insufficient(int i)
+            {
+                UnderBalance(i);
+            }
+
+            public void DepositAmount(int d)
+            {
+                ZeroBalance(d);
+            }
+            public void withdraw(int i)
+            {
+              if (i < bank_balance && bank_balance != 0)
+                {
+                    Console.WriteLine("please take your money");
+                    Console.WriteLine("Transaction Successfull");
+                    Console.WriteLine("Available Balance is:" + (bank_balance - i));
+                }
+                else if (i > bank_balance && bank_balance != 0)
+                {
+                    Console.WriteLine("Insufficient Amount");
+                    Console.WriteLine("Your Current Balance is:" + bank_balance + "only");
+                }
+                else
+                {
+                    Console.WriteLine("Zero Balance:" + bank_balance);
+                }
+            }
+            public void deposit(int i)
+            {
+                Console.WriteLine("Balance after depositing:" + (bank_balance + i));
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            Account acc = new Account();
+            Console.WriteLine("Hello Customer!");
+            Console.WriteLine("Enter Your Pin Number ");
+            Atm_Pin = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine();
+            Console.WriteLine("***Welcome to ATM Service***\n");
+            Console.WriteLine("1. Withdraw");
+            Console.WriteLine("2. Deposit");
+            //Console.WriteLine("3. Quit");
+            Console.WriteLine("-----------------");
+            Console.WriteLine("select your option: 1 or 2 ");
+            string withdraw = Console.ReadLine();
+            //string deposit = Console.ReadLine();
+            if (withdraw == "1")
+            {
+                Console.WriteLine("Enter your amount to be Withdraw");
+                int withdrawbalance = Convert.ToInt32(Console.ReadLine());
+                acc.UnderBalance += new Bank(acc.withdraw);
+                acc.Insufficient(withdrawbalance);
+            }
+            else 
+            {
+                Console.WriteLine("Enter your amount to be Deposit:");
+                int depositbalance = Convert.ToInt32(Console.ReadLine());
+                acc.ZeroBalance += new Bank(acc.deposit);
+                acc.deposit(depositbalance);
+            }
+            //else
+            //{
+            //    Console.WriteLine("Thank You Using ATM");
+            //}
+            Console.ReadKey();
+        }
+    }
+}
+................................................................................................................................................................
+/* 2.Write separate ICICIBank class with EventHandlers for UnderBalance and
+BalanceZero Events.
+Show message "Transaction cannot be continued as balance is insufficient/zero in Account". */
+
+using System;
+
+namespace ICICIBank
+{
+    class Program
+    {
+        public static int Atm_Pin { get; private set; }
+
+        public delegate void Bank(int x);
+
+        public class Account
+        {
+            public int AccountNumber { get; set; }
+            public string CustomerName { get; set; }
+            public decimal bank_balance = 0;
+
+
+            public event Bank UnderBalance;
+            public event Bank ZeroBalance;
+
+            public void Insufficient(int i)
+            {
+                UnderBalance(i);
+            }
+
+            public void DepositAmount(int d)
+            {
+                ZeroBalance(d);
+            }
+            public void withdraw(int i)
+            {
+                if (i < bank_balance )
+                {
+                    Console.WriteLine("please take your money");
+                    Console.WriteLine("Transaction Successfull");
+                    Console.WriteLine("Available Balance is:" + (bank_balance - i));
+                }
+                else 
+                {
+                    Console.WriteLine("Insufficient Amount");
+                    Console.WriteLine("Transaction cannot be continued as balance is insufficient/zero in Account");
+                    Console.WriteLine("Your Current Balance is:" + bank_balance + " Rupees only");
+                }
+                //else
+                //{
+                //    Console.WriteLine("Zero Balance:" + bank_balance);
+                //}
+            }
+            public void deposit(int i)
+            {
+                Console.WriteLine("Current Balance:" + (bank_balance + i));
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            Account acc = new Account();
+            Console.WriteLine("Hello Customer!");
+            Console.WriteLine("Enter Your Pin Number ");
+            Atm_Pin = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine();
+            Console.WriteLine("***Welcome to ATM Service***\n");
+            Console.WriteLine("1. Withdraw");
+            Console.WriteLine("2. Deposit");
+            //Console.WriteLine("3. Quit");
+            Console.WriteLine("-----------------");
+            Console.WriteLine("select your option: 1 or 2 ");
+            string withdraw = Console.ReadLine();
+            //string deposit = Console.ReadLine();
+            if (withdraw == "1")
+            {
+                Console.WriteLine("Enter your amount to be Withdraw");
+                int withdrawbalance = Convert.ToInt32(Console.ReadLine());
+                acc.UnderBalance += new Bank(acc.withdraw);
+                acc.Insufficient(withdrawbalance);
+            }
+            else
+            {
+                Console.WriteLine("Enter your amount to be Deposit:");
+                int depositbalance = Convert.ToInt32(Console.ReadLine());
+                acc.ZeroBalance += new Bank(acc.deposit);
+                acc.deposit(depositbalance);
+            }
+            //else
+            //{
+            //    Console.WriteLine("Thank You Using ATM");
+            //}
+            Console.ReadKey();
+        }
+    }
+}
+    ................................................................................................................................................................................
+/* 3.Write separate HDFCBank class with EventHandlers for UnderBalance and
+BalanceZero Events.
+EventHandler should allow account holder to withdraw money till balance goes to Rs - 1000;below this show message "Transaction cannot be continued below specified limit of	Rs.-1000".*/
+using System;
+
+namespace HDFCBank
+{
+    class Program
+    {
+        public static void Main()
+        {
+            int amount = 10034, deposit, withdraw;
+            int choice, pin = 0;
+            Console.WriteLine("Enter Your 4 Digit Pin ");
+            pin = Convert.ToInt32(Console.ReadLine());
+            while (true)
+            {
+                Console.WriteLine();
+                Console.WriteLine("WELCOME TO HDFC BANK ATM SERVICE\n");
+                Console.WriteLine("1. Current Balance\n");
+                Console.WriteLine("2. Withdraw \n");
+                Console.WriteLine("3. Deposit \n");
+                Console.WriteLine("4. Cancel \n");
+                Console.WriteLine("*****\n");
+                Console.WriteLine("ENTER YOUR CHOICE : ");
+                choice = int.Parse(Console.ReadLine());
+                switch (choice)
+                {
+                    case 1:
+                        Console.WriteLine("\n YOUR CURRENT BALANCE IS Rs : {0} ", amount);
+                        break;
+                    case 2:
+                        Console.WriteLine("\n ENTER THE WITHDRAW AMOUNT : ");
+                        withdraw = Convert.ToInt32(Console.ReadLine());
+                        if (withdraw % 100 != 0)
+                        {
+                            Console.WriteLine("\n PLEASE ENTER THE AMOUNT IN ABOVE 100");
+                        }
+                        else if (withdraw > (amount - 1000))
+                        {
+
+                            Console.WriteLine("Insufficient Money");
+                            Console.WriteLine("Transaction cannot be continued below specified limit of Rs.- 1000");
+
+                        }
+                        else
+                        {
+                            amount = amount - withdraw;
+                            Console.WriteLine("\n PLEASE COLLECT YOUR CASH");
+                            Console.WriteLine("\n CURRENT BALANCE IS Rs : {0}", amount);
+                        }
+                        break;
+                    case 3:
+                        Console.WriteLine("\n ENTER THE DEPOSIT AMOUNT");
+                        deposit = Convert.ToInt32(Console.ReadLine());
+                        amount = amount + deposit;
+                        Console.WriteLine("YOUR AMOUNT HAS BEEN DEPOSITED SUCCESSFULLY");
+                        Console.WriteLine("YOUR TOTAL BALANCE IS Rs : {0}", amount);
+                        break;
+                    case 4:
+                        Console.WriteLine("Thank You");  
+                            break;
+                }
+            }
+        }
+    }
+}
+———————————————————————————————————————
+DEMO PRACTICE CODE   (DELEGATES)
+
+using System;
+
+namespace DemoDelegate
+{
+    public delegate void DemoDelegate();
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            DemoDelegate del = new DemoDelegate(Method1);
+            del += Method1;
+            del += Method2;
+            del += Method3;
+
+            del -= Method2;
+
+            del();
+        }
+        public static void Method1()
+        {
+            Console.WriteLine("Method1 Invoked");
+
+        }
+        public static void Method2()
+        {
+            Console.WriteLine("Method2 Invoked");
+        }
+        public static void Method3()
+        {
+            Console.WriteLine("Method3 Invoked");
+        }
+    
+}
+}
